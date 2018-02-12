@@ -36,6 +36,7 @@ h3 {
   justify-content: center;
   height: 500px;
   background-image: url('../assets/door.jpg');
+  background-size: contain;
 }
 
 

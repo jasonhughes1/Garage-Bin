@@ -1,21 +1,24 @@
 
-let garageItems;
+let garageItems = [];
 
 const appendItems = (items) => {
   items.forEach(item => {
-    $('.garage').append(`<div class='appended-garage'>
-      <div class='item${item.id}'>
+    console.log(item);
+    $('.garage').append(`
+      <div class='item ${item.id} ${item.cleanliness}'>
         <h4 class='item-name'>Item: ${item.name}</h4>
         <h4 class='reason'>Reason: ${item.reason}</h4>
         <h4 class='condition'>Cleanliness: ${item.cleanliness}</h4>
      </div>`)
   })
+  counter();
 }
 
 const fetchItems = () => {
   fetch('/api/v1/items')
     .then(res => res.json())
     .then(items =>  {
+      console.log(items);
       garageItems = items;
       appendItems(items)
   });
@@ -94,6 +97,17 @@ const addItem = () => {
 const clearInput = () => {
   $('.name-item-input').val('');
   $('.reason-input').val('');
+};
+
+const counter = () => {
+  const itemCount = $('.item').length;
+
+  const dusty = $('.reason').length;
+  const rancid = $('.condition').length;
+
+  $('#count-all-items').text(itemCount);
+  $('#dusty').text(dusty);
+  $('#rancid').text(rancid);
 };
 
 
