@@ -2,9 +2,42 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Garage Bin</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css">
   </head>
   <body>
-    <h1>Garage Bin</h1>
+    <div class="header">
+    <h1>My Garage</h1>
+  </div>
+<div class="item-addition">
+  <h2 class="add-item">Add Item!</h2>
+  <input class="name-item-input "type="text" placeholder="Name">
+  <input class="reason-input "type="text" placeholder="Reason">
+  <select class="drop-down" name="">
+    <option value="Sparkling">Sparkling</option>
+    <option value="Dusty">Dusty</option>
+    <option value="Rancid">Rancid</option>
+  </select>
+  <button class="submit-btn" type="button" name="button">Add Item</button>
+  <button class="sort-btn">Sort Items A-Z</button>
+</div>
+<div class="garage">
+  <div class="close-door">
+    <div class="open-door">
+      <button class="open-btn">Open Garage</button>
+    </div>
+  </div>
+  <div class="items-container">
+  </div>
+</div>
+<div class="counter-container">
+  <h1 class="count-items">Item Count: <span id='count-all-items'></span></h1>
+  <h3 class="count">Sparkling Items: <span id='sparkling'></span></h3>
+  <h3 class="count">Dusty Items: <span id='dusty'></span></h3>
+  <h3 class="count">Rancid Items: <span id='rancid'></span></h3>
+</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./scripts.js"></script>
   </body>
 </html>

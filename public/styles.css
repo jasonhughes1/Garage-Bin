@@ -1,0 +1,38 @@
+.header {
+  display: flex;
+  justify-content: center;
+}
+
+.item-addition {
+  margin-top: -20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.counter-container {
+  margin-top: -20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h3 {
+  margin: 2px 0px 2px 0px;
+}
+
+.count-items {
+  border-bottom: 1px solid black;
+}
+
+.garage {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  height: 500px;
+  background-color: blue;
+}
+
+.sort-btn {
+  margin-top: 20px;
+}
