@@ -60,6 +60,15 @@ const sortGarageItems = (items) => {
   }
 };
 
+const doorControl = () => {
+  console.log('hello');
+  $('.garage').removeClass()
+  $('.garage').addClass('.open-garage-door');
+  // $('.garage').remove()
+
+}
+
 
 $(document).ready(fetchItems)
 $('.sort-btn').on('click', sortGarageItems)
+$('.open-btn').on('click', doorControl);

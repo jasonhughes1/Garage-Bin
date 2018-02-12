@@ -1,3 +1,7 @@
+* {
+  background-color: lightgrey;
+}
+
 .header {
   display: flex;
   justify-content: center;
@@ -30,8 +34,10 @@ h3 {
   display: flex;
   justify-content: center;
   height: 500px;
-  background-color: blue;
+  background-image: url('../assets/door.jpg');
 }
+
+
 
 .sort-btn {
   margin-top: 20px;
@@ -47,4 +53,9 @@ h3 {
 .reason,
 .condition {
   margin: 10px;
+}
+
+
+.open-garage-door {
+  background-color: whit
 }
