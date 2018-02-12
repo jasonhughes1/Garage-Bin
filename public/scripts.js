@@ -68,7 +68,36 @@ const doorControl = () => {
 
 }
 
+const addItem = () => {
+  const item = {
+    name: $('.name-item-input').val(),
+    reason: $('.reason-input').val(),
+    cleanliness: $('.drop-down').val()
+  };
+
+  fetch('/api/v1/items', {
+    method: 'POST',
+    body: JSON.stringify(item),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(res => res.json())
+    .then(items => {
+      appendItems(items);
+      garageItems.push(items[0]);
+      clearinput();
+    })
+    .catch(error => console.log(error));
+};
+
+const clearInput = () => {
+  $('.name-item-input').val('');
+  $('.reason-input').val('');
+};
+
 
 $(document).ready(fetchItems)
+$('.submit-btn').on('click', addItem);
 $('.sort-btn').on('click', sortGarageItems)
 $('.open-btn').on('click', doorControl);
