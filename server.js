@@ -54,3 +54,5 @@ app.post('/api/v1/items', (request, response) => {
       return response.status(500).json({ error })
     })
 })
+
+module.exports = app;
