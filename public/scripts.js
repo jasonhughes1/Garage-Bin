@@ -1,18 +1,6 @@
 
 let garageItems = [];
 
-const appendItems = (items) => {
-  items.forEach(item => {
-    console.log(item);
-    $('.garage').append(`
-      <div class='item ${item.id} ${item.cleanliness}'>
-        <h4 class='item-name'>Item: ${item.name}</h4>
-        <h4 class='reason'>Reason: ${item.reason}</h4>
-        <h4 class='condition'>Cleanliness: ${item.cleanliness}</h4>
-     </div>`)
-  })
-  counter();
-}
 
 const fetchItems = () => {
   fetch('/api/v1/items')
@@ -24,7 +12,29 @@ const fetchItems = () => {
   });
 };
 
+const appendItems = (items) => {
+  items.forEach(item => {
+
+    $('.garage').append(`
+      <div id=${item.id} class='item ${item.id} item ${item.cleanliness}'>
+        <h4 class='item-name'>Item: ${item.name}</h4>
+        <button class='details-btn'>Item Details</button>
+        <div class='hide-details'>
+          <h4 class='reason'>Reason: ${item.reason}</h4>
+          <h4 class='condition'>Cleanliness: ${item.cleanliness}</h4>
+          <select class="details-drop-down" name="">
+            <option ${item.cleanliness === 'Sparkling' ? 'selected' : ''} value="Sparkling">Sparkling</option>
+            <option ${item.cleanliness === 'Dusty' ? 'selected' : ''} value="Dusty">Dusty</option>
+            <option ${item.cleanliness === 'Rancid' ? 'selected' : ''} value="Rancid">Rancid</option>
+          </select>
+        </div>
+      </div>`)
+    })
+    counter();
+  };
+
 const orderItems = (items) => {
+  console.log(items);
   const sort = items.sort((a, b) => {
     let firstName = a.name.toLowerCase();
     let secondName = b.name.toLowerCase();
@@ -36,6 +46,7 @@ const orderItems = (items) => {
     }
     return 0;
   })
+  return sort;
 }
 
 const reverseOrderItems = (items ) => {
@@ -50,13 +61,16 @@ const reverseOrderItems = (items ) => {
     }
     return 0;
   })
+  return sort;
 }
 
 const sortGarageItems = (items) => {
+  let alphabetical = orderItems(garageItems)
+  console.log(alphabetical);
   const button =  $('.sort-btn').text();
   if (button === 'Sort A-Z') {
     $('.sort-btn').text('Sort Z-A');
-    appendItems(orderItems(garageItems));
+    appendItems(alphabetical);
   } else {
     $('.sort-btn').text('Sort A-Z');
     appendItems(reverseOrderItems(garageItems));
