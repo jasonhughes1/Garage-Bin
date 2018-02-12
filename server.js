@@ -58,7 +58,7 @@ app.post('/api/v1/items', (request, response) => {
 app.patch('/api/v1/items/:id', (request, response) => {
   const id = request.params.id;
   const cleanliness = request.body.cleanliness;
-  database('items').where('id', id).update({cleanliness})
+  database('items').where('id', id).update({ cleanliness })
     .then( (res) => {
       if (!res) {
         response.status(422).json({ error: `No item has an id of ${id}`});
