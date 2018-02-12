@@ -55,4 +55,20 @@ app.post('/api/v1/items', (request, response) => {
     })
 })
 
+app.patch('/api/v1/items/:id', (request, response) => {
+  const id = request.params.id;
+  const cleanliness = request.body.cleanliness;
+  database('items').where('id', id).update({cleanliness})
+    .then( (res) => {
+      if (!res) {
+        response.status(422).json({ error: `No item has an id of ${id}`});
+      } else {
+        response.status(204).send();
+      }
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
+  });
+
 module.exports = app;
