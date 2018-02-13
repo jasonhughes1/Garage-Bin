@@ -13,9 +13,9 @@ const fetchItems = () => {
 };
 
 const appendItems = (items) => {
+  $('.items-container').empty()
   items.forEach(item => {
-
-    $('.garage').append(`
+    $('.items-container').append(`
       <div id=${item.id} class='item ${item.id} item ${item.cleanliness}'>
         <h4 class='item-name'>Item: ${item.name}</h4>
         <button class='details-btn'>Item Details</button>
@@ -73,10 +73,10 @@ const reverseOrderItems = (items ) => {
   const sort = items.sort((a, b) => {
     let firstName = a.name.toLowerCase();
     let secondName = b.name.toLowerCase();
-    if(firstName > secondName) {
+    if(secondName > firstName ) {
       return -1;
     }
-    if(firstName < secondName) {
+    if( secondName < firstName ) {
       return 1;
     }
     return 0;
@@ -84,25 +84,32 @@ const reverseOrderItems = (items ) => {
   return sort;
 }
 
-const sortGarageItems = (items) => {
-  let alphabetical = orderItems(garageItems)
-  console.log(alphabetical);
+const sortGarageItems = () => {
   const button =  $('.sort-btn').text();
-  if (button === 'Sort A-Z') {
-    $('.sort-btn').text('Sort Z-A');
+
+  if (button === 'Sort Items A-Z') {
+    let alphabetical = orderItems(garageItems)
+    $('.sort-btn').text('Sort Items Z-A');
     appendItems(alphabetical);
-  } else {
-    $('.sort-btn').text('Sort A-Z');
-    appendItems(reverseOrderItems(garageItems));
+  } else if (button === 'Sort Items Z-A') {
+    let reverse = reverseOrderItems(garageItems)
+    $('.sort-btn').text('Sort Items A-Z');
+    appendItems(reverse);
   }
 };
 
 const doorControl = () => {
-  console.log('hello');
-  $('.garage').removeClass()
-  $('.garage').addClass('.open-garage-door');
-  // $('.garage').remove()
-
+  if($('.garage').hasClass('open-garage-door')) {
+    $('.garage').removeClass('open-garage-door')
+    $('.garage-is-closed').removeClass('close-garage-door')
+    $('.garage-is-closed').addClass('open-garage-door')
+    $('.garage').addClass('close-garage-door')
+  } else {
+    $('.garage').removeClass('close-garage-door')
+    $('.garage').addClass('open-garage-door')
+    $('.garage-is-closed').addClass('close-garage-door')
+    $('.garage-is-closed').removeClass('open-garage-door')
+  }
 }
 
 const addItem = () => {
@@ -149,5 +156,5 @@ $(document).ready(fetchItems)
 $('.garage').on('change', '.details-drop-down', (event) => updateCleanliness(event))
 $('.garage').on('click', '.details-btn', (event) => details(event));
 $('.submit-btn').on('click', addItem);
-$('.sort-btn').on('click', sortGarageItems)
+$('.sort-btn').on('click', sortGarageItems);
 $('.open-btn').on('click', doorControl);

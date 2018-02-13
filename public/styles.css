@@ -29,6 +29,10 @@ h3 {
   border-bottom: 1px solid black;
 }
 
+.open-door {
+  display: flex;
+}
+
 .garage {
   flex-wrap: wrap;
   margin-top: 20px;
@@ -36,17 +40,25 @@ h3 {
   flex-direction: column;
   justify-content: center;
   height: 500px;
-
-  background-size: contain;
   overflow-x: scroll;
 }
 
-.open-door {
-  display: flex;
+.garage-is-closed {
+  background-image: url('../assets/door.jpg');
+  height: 500px;
+  background-size: contain;
 }
 
 .close-door {
- background-image: url('../assets/door.jpg');
+ background-color: black;
+}
+
+.open-garage-door {
+  display: block;
+}
+
+.close-garage-door {
+  display: none;
 }
 
 .item {
@@ -55,6 +67,7 @@ h3 {
   align-items: center;
   border: 1px solid black;
   margin: 3px;
+  width: 100%;
 }
 
 .sort-btn {
@@ -71,11 +84,6 @@ h3 {
 .reason,
 .condition {
   margin: 10px;
-}
-
-
-.open-garage-door {
-  background-color: whit
 }
 
 .hidden {
