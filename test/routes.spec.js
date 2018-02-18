@@ -1,8 +1,6 @@
-process.env.NODE_ENV = 'test';
 const chaiHttp = require('chai-http');
 const server = require('../server');
 const chai = require('chai');
-
 const should = chai.should();
 const knex = require('../db/knex');
 const configuration = require('../knexfile')['test'];
@@ -19,20 +17,16 @@ describe('Client Routes', () => {
         response.should.have.status(200);
         response.should.be.html;
       })
-      .catch(() => {
-        console.log('response');
-      });
+      .catch(error => { throw error; });
   });
 
   it('should return a 404 for a route that does not exist', () => {
     return chai.request(server)
       .get('/nothere!')
-      .then(() => {
-        console.log('response');
-      })
-      .catch(response => {
+      .then(response => {
         response.should.have.status(404);
-      });
+      })
+      .catch(error => { throw error; });
   });
 });
 
@@ -61,13 +55,11 @@ describe('API Routes', () => {
 
     it('should return 404 status if the url is mistyped', () => {
       return chai.request(server)
-        .get('/api/v1/items')
-        .then(() => {
-          console.log('response');
-        })
-        .catch(response => {
+        .get('/api/v1/itemsss')
+        .then(response => {
           response.should.have.status(404);
-        });
+        })
+        .catch(error => { throw error; });
     });
   });
 
@@ -76,7 +68,6 @@ describe('API Routes', () => {
       return chai.request(server)
         .post('/api/v1/items')
         .send({
-          id: 10,
           name: 'work bench',
           reason: 'too heavy to move',
           cleanliness: 'rancid'
@@ -84,8 +75,8 @@ describe('API Routes', () => {
         .then(response => {
           response.should.have.status(201);
           response.should.be.json;
+          response.body.should.be.a('object');
           response.body.should.have.property('id');
-          response.body.id.should.equal(10);
         })
         .catch(error => { throw error; });
     });
@@ -96,42 +87,27 @@ describe('API Routes', () => {
         .send({
           name: 'camping stuff'
         })
-        .then(() => {
-          console.log('response');
+        .then(response => {
+          response.should.have.status(422);
+          response.body.error.should.equal('Missing reason.');
         })
-        .catch(error => {
-          error.response.should.have.status(422);
-          error.response.body.should.be.a('object');
-          error.response.body.error.should.equal(
-            'You are missing a required parameter');
-        });
+        .catch(error => { throw error; });
     });
   })
 
-  describe('PATCH /api/v1/items/id', () => {
+  describe('PATCH /api/v1/items/:id', () => {
       it('should PATCH a property of a item (cleanliness)', () => {
         return chai.request(server)
-          .post('/api/v1/items')
+          .patch('/api/v1/items/17')
           .send({
             cleanliness: 'rancid'
           })
-          .then(response => {
-            return response.body.id;
+          .then((response) => {
+            response.should.have.status(200);
+            response.body.status.should.equal('Successfully updated cleanliness of item #17, to rancid.')
           })
-          .then(id => {
-            return chai.request(server)
-              .patch(`/api/v1/items/${id}`)
-              .send({
-                cleanliness: 'changed cleanliness'
-              })
-              .then(response => {
-                response.should.have.status(201);
-                response.body.should.be.a('object');
-                response.body.success.should.equal(`Updated items ${id}'s name.`);
-              });
-          });
-      });
-    })
+          .catch(error => {throw error; })
+    });
 
 it('should return error message if item does not exist', () => {
   return chai.request(server)
@@ -139,13 +115,12 @@ it('should return error message if item does not exist', () => {
     .send({
       name: 'changed name'
     })
-    .then(() => {
-      console.log('response');
+    .then(response => {
+      response.should.have.status(422);
     })
     .catch(error => {
-      error.response.should.have.status(500);
-      error.response.body.should.be.a('object');
-      error.response.body.error.should.equal('No item with id 100 found.');
+      throw error;
+      });
     });
   });
-})
+});

@@ -61,13 +61,13 @@ app.patch('/api/v1/items/:id', (request, response) => {
   database('items').where('id', id).update({ cleanliness })
     .then( (res) => {
       if (!res) {
-        response.status(422).json({ error: `No item has an id of ${id}`});
+        response.status(404).json({ error: `No item has an id of ${id}`});
       } else {
-        response.status(204).send();
+        response.status(200).json( { status: `Successfully updated cleanliness of item #${id}, to ${cleanliness}.`});
       }
     })
     .catch(error => {
-      response.status(500).json({ error });
+      response.status(422).json({ error });
     });
   });
 
