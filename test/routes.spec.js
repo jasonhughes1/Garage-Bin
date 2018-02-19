@@ -116,7 +116,7 @@ it('should return error message if item does not exist', () => {
       name: 'changed name'
     })
     .then(response => {
-      response.should.have.status(422);
+      response.should.have.status(404);
     })
     .catch(error => {
       throw error;

@@ -67,7 +67,7 @@ app.patch('/api/v1/items/:id', (request, response) => {
       }
     })
     .catch(error => {
-      response.status(422).json({ error });
+      response.status(404).json({ error });
     });
   });
 
